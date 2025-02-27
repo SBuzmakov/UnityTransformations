@@ -1,0 +1,16 @@
+using UnityEngine;
+
+public class MoverForward : MonoBehaviour
+{
+    [SerializeField] private float _speed;
+    
+    void Update()
+    {
+       MoveForward();
+    }
+    
+    private void MoveForward()
+    {
+        transform.Translate(transform.forward * (_speed * Time.deltaTime));
+    }
+}
