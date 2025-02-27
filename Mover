@@ -1,0 +1,45 @@
+using UnityEngine;
+
+public class Mover : MonoBehaviour
+{
+    [SerializeField] private float _speed;
+    [SerializeField] private Vector3 _moveDirection; 
+
+    private Vector3 _basePosition = new();
+    private bool _isMoveToGoalPosition = true;
+    
+    void Start()
+    {
+        _basePosition = transform.position;
+    }
+    
+    void Update()
+    {
+        ChangeMoveDirection();
+        
+        Move();
+    }
+
+    private void Move()
+    {
+        if (_isMoveToGoalPosition)
+            transform.position = Vector3.MoveTowards(transform.position, GetGoalPosition(), _speed * Time.deltaTime);
+        
+        if (_isMoveToGoalPosition == false)
+            transform.position = Vector3.MoveTowards(transform.position, _basePosition, _speed * Time.deltaTime);
+    }
+
+    private Vector3 GetGoalPosition()
+    {
+        return _basePosition + _moveDirection;
+    }
+    
+    private void ChangeMoveDirection()
+    {
+        if (transform.position == GetGoalPosition())
+            _isMoveToGoalPosition = false;
+
+        if (transform.position == _basePosition)
+            _isMoveToGoalPosition = true;
+    }
+}
